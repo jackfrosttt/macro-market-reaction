@@ -30,6 +30,11 @@ TD = "https://api.twelvedata.com/time_series"
 COLUMNS = ["Date", "Adj Close", "Close", "High", "Low", "Open", "Volume", "Ticker"]
 
 
+def fname(sym):
+    """BTC/USD -> BTC for filenames/ticker column."""
+    return sym.replace("/USD", "").replace("/", "_")
+
+
 def fetch_symbol(sym, outputsize):
     params = dict(symbol=sym, interval="1day", outputsize=outputsize,
                   order="ASC", apikey=config.TWELVE_DATA_API_KEY)
@@ -40,16 +45,18 @@ def fetch_symbol(sym, outputsize):
     df = pd.DataFrame(js["values"])
     df = df.rename(columns={"datetime": "Date", "open": "Open", "high": "High",
                             "low": "Low", "close": "Close", "volume": "Volume"})
+    if "Volume" not in df.columns:      # crypto pairs come without volume
+        df["Volume"] = 0
     for c in ["Open", "High", "Low", "Close", "Volume"]:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     df["Adj Close"] = df["Close"]      # TD daily close is already split-adjusted
-    df["Ticker"] = sym
+    df["Ticker"] = fname(sym)
     return df[COLUMNS]
 
 
 def merge_into_csv(sym, fresh):
     """Keep old history before the fresh window, then append fresh bars."""
-    path = config.PRICE_DIR / f"daily_{sym}.csv"
+    path = config.PRICE_DIR / f"daily_{fname(sym)}.csv"
     if path.exists():
         old = pd.read_csv(path)
         old["Date"] = old["Date"].astype(str).str[:10]

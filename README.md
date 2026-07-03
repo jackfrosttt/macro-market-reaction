@@ -76,6 +76,32 @@ Reports tagged **`<-- WATCH` / USUALLY TRENDS** are your directional-option days
 | `python run.py darkpool` | FINRA dark-pool volume + quiet-accumulation scan |
 | `python run.py backtest` | do the patterns make money? tested rules with win rates |
 | `python run.py sync` | push code+analysis to the public portfolio repo (strips private) |
+| `python run.py btc` | **is Bitcoin trending up or down right now?** live 15-min verdict + context |
+| `python run.py q list` | **the 50-query library** — premade answers to "is this something?" |
+
+## ❓ The query library (`run.py q ...`)
+
+50 premade questions, grouped. `python run.py q list` shows all of them. The ones
+you'll use most:
+
+```bash
+python run.py q today                # is today/yesterday SOMETHING? (SPY QQQ IWM BTC one-shot)
+python run.py q btc                  # is bitcoin trending up or down RIGHT NOW (live)
+python run.py q move-z QQQ           # how rare was that move?
+python run.py q after-down2          # what usually happens the day after -2%?
+python run.py q report Jobs          # full history of any report vs SPY/QQQ
+python run.py q event-league         # which reports move markets most (2.5y)
+python run.py q worst-chops          # the option-killer days to learn from
+python run.py q fomc-cycle           # SPY day before/of/after every FOMC
+python run.py q em SPY 5             # expected move next 5 days (1-sigma range)
+python run.py q day 2026-06-17       # 30-min replay of any day + what released
+python run.py q btc-spy              # is BTC trading with stocks (macro-driven)?
+python run.py q formulas             # the full formula reference card
+```
+
+Queries take an optional symbol (`q rsi NVDA`), and `q breakeven 750 3.50 call`
+computes option breakevens. If you're wondering "is X something?" — check
+`q list` first; it's probably premade.
 
 ### Placeholders you can change (the `--flags`)
 

@@ -36,7 +36,9 @@ SUBCMDS = {"prices": "fetch_prices.py",
            "options": "fetch_options.py",
            "darkpool": "darkpool.py",
            "backtest": "backtest.py",
-           "sync": "sync_public.py"}
+           "sync": "sync_public.py",
+           "q": "queries.py",
+           "btc": "btc_trend.py"}
 
 
 def run_script(script, argv):
