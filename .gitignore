@@ -1,0 +1,15 @@
+# secrets -- never commit API keys
+.env
+
+# raw vendor price data (Twelve Data / Yahoo) -- not redistributed here.
+# Fetch your own with: python run.py prices
+daily_*.csv
+!analysis/daily_metrics.csv
+
+# python
+venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
