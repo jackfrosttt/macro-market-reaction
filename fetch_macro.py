@@ -61,6 +61,29 @@ def series_vintage(series_id, start, end):
     return js.get("observations", [])
 
 
+def series_plain(series_id, end):
+    """Fallback: latest-vintage observations (output_type=1). Values may include
+    later revisions, but this always works even for huge daily series."""
+    js = _get("series/observations", series_id=series_id,
+              observation_start="2023-06-01", observation_end=end,
+              sort_order="asc", limit=100000)
+    return [o for o in js.get("observations", [])
+            if o.get("value") not in (".", None, "")]
+
+
+def value_plain(obs, release_date):
+    """Most recent period completed BEFORE the release date = the fresh print
+    (approximately -- ignores revisions)."""
+    pool = [o for o in obs if o["date"] < release_date]
+    if not pool:
+        return None, None
+    best = pool[-1]
+    try:
+        return best["date"], float(best["value"])
+    except ValueError:
+        return best["date"], None
+
+
 def value_released_on(obs, release_date, series):
     """
     With output_type=2 each observation row looks like:
@@ -103,9 +126,18 @@ def build(start, end):
         # look back a bit before `start` so the first release in-window still
         # has a prior vintage to fall back on
         vint_start = (dt.date.fromisoformat(start) - dt.timedelta(days=120)).isoformat()
-        obs = series_vintage(meta["series"], vint_start, end)
+        try:
+            obs = series_vintage(meta["series"], vint_start, end)
+            plain = False
+        except RuntimeError:
+            # huge vintage sets (daily series over long ranges) time out --
+            # fall back to latest-vintage values
+            print(f"    (vintages too large for {meta['series']}; using latest values)")
+            obs = series_plain(meta["series"], end)
+            plain = True
         for d in dates:
-            period, val = value_released_on(obs, d, meta["series"])
+            period, val = (value_plain(obs, d) if plain
+                           else value_released_on(obs, d, meta["series"]))
             rows.append({
                 "release_date": d,
                 "report": meta["name"],

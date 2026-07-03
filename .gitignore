@@ -1,11 +1,6 @@
 # secrets -- never commit API keys
 .env
 
-# raw vendor price data (Twelve Data / Yahoo) -- not redistributed here.
-# Fetch your own with: python run.py prices
-daily_*.csv
-!analysis/daily_metrics.csv
-
 # python
 venv/
 __pycache__/
@@ -13,3 +8,7 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# derived database -- rebuild with: python run.py db && python run.py intraday
+market.db
+options_*.csv

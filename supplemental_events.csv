@@ -1,0 +1,31 @@
+# supplemental_events.csv -- YOUR manual macro entries (ISM, ADP, sentiment,
+# Fed minutes, consensus numbers... anything FRED doesn't carry).
+#
+# HOW TO USE: each week, copy from the MarketWatch/Investing.com calendar into
+# rows below. Lines starting with # are ignored.
+#   release_date : YYYY-MM-DD
+#   report       : short name
+#   time_et      : HH:MM (24h ET)
+#   tier         : 1 = top mover, 2 = important, 3 = minor
+#   consensus    : the MEDIAN FORECAST column  <- THE MISSING SURPRISE PIECE
+#   actual       : fill in after the release
+#   prev         : the PREVIOUS column
+#   notes        : anything
+#
+# Once consensus+actual are filled, `python run.py db` computes the surprise.
+release_date,report,time_et,tier,consensus,actual,prev,notes
+2026-07-06,ISM Services PMI,10:00,2,,,54.5,pre-filled from MarketWatch calendar
+2026-07-06,S&P final services PMI,09:45,3,,,51.3,
+2026-07-07,US Trade Balance,08:30,3,,,-55.9,billions USD
+2026-07-08,FOMC June Minutes,14:00,2,,,,no number - tone event; watch 2pm
+2026-07-08,Consumer Credit,15:00,3,,,20.7,billions USD
+2026-07-09,Existing Home Sales,10:00,3,,,4.17,millions
+2026-07-13,Federal Budget,14:00,3,,,,
+2026-07-14,NFIB Optimism,06:00,3,,,95.3,
+2026-07-15,Empire State Mfg,08:30,3,,,5.7,
+2026-07-15,Fed Beige Book,14:00,3,,,,tone event
+2026-07-16,Philadelphia Fed Mfg,08:30,3,,,10.3,
+2026-07-17,Consumer Sentiment prelim,10:00,2,,,49.5,UMich
+2026-07-17,Housing Starts,08:30,3,,,1.18,millions
+2026-07-17,Industrial Production,09:15,3,,,0.1,percent MoM
+# --- add next week's rows here ---

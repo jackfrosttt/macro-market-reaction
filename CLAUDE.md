@@ -1,5 +1,19 @@
 # CLAUDE.md — orientation for AI instances working in this repo
 
+## ⚠️ READ FIRST — this project has a PUBLIC mirror
+There are TWO GitHub repos (owner `jackfrosttt`):
+- `market-data` — **PRIVATE**, full backup incl. raw price CSVs and (locally) `.env`.
+- `macro-market-reaction` — **PUBLIC** portfolio repo: code + derived analysis
+  only, NO raw vendor CSVs, NO `.env`, separate clean history.
+
+**Public sync policy (user-authorized 2026-07-02):** the user wants the public
+repo synced EVERY time work lands, with private stuff stripped. Use
+`python run.py sync` (sync_public.py) — it copies only the allowlist (*.py,
+docs, analysis/, FRED csv), hard-aborts if .env/daily_*.csv/market.db/key
+material would be published. NEVER sync by hand-copying files; never bypass
+its safety checks. Commit+push the PRIVATE repo first, then run sync.
+
+
 ## Purpose
 Correlate U.S. macroeconomic **report releases** with **market reaction** in
 SPY/QQQ to find which releases produce big **directional** moves (tradable with
@@ -23,7 +37,35 @@ release days.
   Writes `macro_releases.csv`.
 - `analyze.py` — computes per-day metrics (see below), classifies each day, ranks
   reports, writes `analysis/{report.md,report_ranking.csv,daily_metrics.csv}`.
-- `run.py` — entry point: `prices | macro | analyze | all`, passes through args.
+- `brief.py` — user-facing briefing: `brief` (9am refresh+watchlist), `calendar`,
+  `history` (last 5mo per report), `cheatsheet` (per-report trend/chop tendency).
+- `build_db.py` — loads CSVs into local SQLite `market.db` (tables: prices,
+  macro_releases, event_reactions). Command: `run.py db`.
+- `fetch_intraday.py` — 30-min SPY/QQQ bars into `market.db` (intraday,
+  event_intraday) to pinpoint WHEN a move happened. Command: `run.py intraday`.
+  TD serves regular-hours only (no pre-market), so 8:30 reports show as the open
+  gap; 10:00/14:00 reports are pinpointed exactly.
+- `run.py` — entry point: `prices | macro | analyze | brief | calendar | history
+  | cheatsheet | db | intraday | all`, passes through args.
+
+## Newer modules
+- `fetch_options.py` (`run.py options`) — FREE CBOE delayed chains (Twelve Data
+  options = paid, don't use). P/C ratios, OI walls, ATM IV; appends to
+  `options_snapshots` in market.db so positioning can be tracked over time.
+- `darkpool.py` (`run.py darkpool`) — FINRA ATS weekly dark-pool volume
+  (api.finra.org POST with compareFilters; weekStartDate EQUAL filter REQUIRED)
+  + high-volume/no-move anomaly proxy on daily data.
+- `supplemental_events.csv` — USER-maintained (comment='#' format): ISM, Fed
+  minutes, sentiment + CONSENSUS numbers pasted weekly from MarketWatch.
+  Merged everywhere via `analyze.load_events()`; surprise = actual − consensus.
+  This is the user's workflow — remind them to fill it weekly, don't overwrite it.
+
+## Remaining blind spots (be honest about these)
+- Consensus/surprise now possible but MANUAL (user fills supplemental CSV).
+- ISM etc. covered only via the manual CSV — not auto-fetched.
+- No Fed-speaker calendar. No pre-market/futures (only the resulting open gap).
+- FINRA dark-pool data lags 2-4 weeks. Options data is delayed ~15 min.
+- Intraday is SPY/QQQ only. Correlation != causation (see Jun 11 PPI bounce).
 
 ## Key metric
 `trend_eff = |ret_oc| / range_pct` is the trend-vs-chop discriminator.

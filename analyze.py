@@ -68,9 +68,28 @@ def classify(row):
     return "MIXED"
 
 
-def load_macro(start, end):
+def load_events():
+    """FRED calendar + the user's manual supplemental_events.csv, one frame.
+
+    Supplemental rows carry `consensus`/`actual`; when both are present we
+    compute `surprise` (actual - consensus) -- the thing markets truly react to.
+    """
     m = pd.read_csv(config.MACRO_CSV)
+    m["source"] = "fred"
+    if config.SUPPLEMENTAL_CSV.exists():
+        s = pd.read_csv(config.SUPPLEMENTAL_CSV, comment="#")
+        s = s.dropna(subset=["release_date", "report"])
+        s["value"] = pd.to_numeric(s.get("actual"), errors="coerce")
+        s["consensus"] = pd.to_numeric(s.get("consensus"), errors="coerce")
+        s["surprise"] = s["value"] - s["consensus"]
+        s["source"] = "manual"
+        m = pd.concat([m, s], ignore_index=True)
     m["Date"] = pd.to_datetime(m["release_date"])
+    return m
+
+
+def load_macro(start, end):
+    m = load_events()
     m = m[(m["Date"] >= start) & (m["Date"] <= end)]
     return m
 
