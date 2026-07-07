@@ -1,6 +1,6 @@
 ```
 ==============================================================================
- MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-08 -> 2026-07-06  (120d)
+ MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-09 -> 2026-07-07  (120d)
  reports included: tier <= 2   (NOTE: values are ACTUALS from FRED; no consensus/surprise)
 ==============================================================================
 
@@ -15,8 +15,8 @@ PPI (Producer Price Index)          4     1.22%     0.94%   1.39%   0.71   75%
 Jobs Report (NFP + Unemployment)    3     1.18%     0.89%   1.43%   0.62   67%
 JOLTS (Job Openings)                5     1.04%     0.84%   1.15%   0.70   60%
 FOMC Rate Decision                  3     0.89%     0.83%   1.18%   0.59   67%
+ISM Services PMI                    1     0.87%     0.34%   0.67%   0.51    0%
 Retail Sales (Advance)              4     0.86%     0.77%   1.15%   0.63   50%
-ISM Services PMI                    1     0.84%     0.32%   0.66%   0.49    0%
 GDP                                 5     0.57%     0.71%   1.24%   0.59    0%
 PCE (Personal Income & Outlays)     5     0.57%     0.71%   1.24%   0.59    0%
 CPI (Consumer Price Index)          4     0.48%     0.43%   1.06%   0.38   25%
@@ -51,5 +51,5 @@ date             gap   ret_cc   ret_oc   range cl_loc  trend  class       report
 2026-06-25    +0.77%   +0.14%   -0.62%  1.33%   0.48   0.47  MIXED       GDP, PCE (Personal Income & Outlays)
 2026-06-30    +0.04%   +0.78%   +0.74%  0.96%   0.82   0.77  DIRECTIONAL JOLTS (Job Openings)
 2026-07-02    +0.22%   -0.13%   -0.35%  1.51%   0.42   0.23  CHOP        Jobs Report (NFP + Unemployment)
-2026-07-06    +0.52%   +0.84%   +0.32%  0.66%   0.73   0.49  MIXED       ISM Services PMI
+2026-07-06    +0.53%   +0.87%   +0.34%  0.67%   0.78   0.51  MIXED       ISM Services PMI
 ```
