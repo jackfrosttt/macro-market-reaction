@@ -1,13 +1,13 @@
 ```
 ==============================================================================
- MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-09 -> 2026-07-07  (120d)
+ MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-10 -> 2026-07-08  (120d)
  reports included: tier <= 2   (NOTE: values are ACTUALS from FRED; no consensus/surprise)
 ==============================================================================
 
 [1] BASELINE  (average absolute reaction)
                          n  |ret_cc|    range  trend_eff  %directional
 macro-release days      26     0.85%    1.16%       0.58           42%
-normal days             56     0.68%    1.05%       0.42           23%
+normal days             56     0.67%    1.02%       0.41           21%
 
 [2] PER-REPORT REACTION  (SPY, ranked by avg |ret_cc|)
 report                              n  |ret_cc|  |ret_oc|   range  trend  dir%
@@ -51,5 +51,5 @@ date             gap   ret_cc   ret_oc   range cl_loc  trend  class       report
 2026-06-25    +0.77%   +0.14%   -0.62%  1.33%   0.48   0.47  MIXED       GDP, PCE (Personal Income & Outlays)
 2026-06-30    +0.04%   +0.78%   +0.74%  0.96%   0.82   0.77  DIRECTIONAL JOLTS (Job Openings)
 2026-07-02    +0.22%   -0.13%   -0.35%  1.51%   0.42   0.23  CHOP        Jobs Report (NFP + Unemployment)
-2026-07-06    +0.53%   +0.87%   +0.34%  0.67%   0.78   0.51  MIXED       ISM Services PMI
+2026-07-06    +0.53%   +0.87%   +0.34%  0.67%   0.77   0.51  MIXED       ISM Services PMI
 ```
