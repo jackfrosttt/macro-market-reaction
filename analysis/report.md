@@ -1,13 +1,13 @@
 ```
 ==============================================================================
- MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-10 -> 2026-07-08  (120d)
+ MACRO-RELEASE vs MARKET REACTION  |  SPY  |  2026-03-12 -> 2026-07-10  (120d)
  reports included: tier <= 2   (NOTE: values are ACTUALS from FRED; no consensus/surprise)
 ==============================================================================
 
 [1] BASELINE  (average absolute reaction)
                          n  |ret_cc|    range  trend_eff  %directional
-macro-release days      26     0.85%    1.16%       0.58           42%
-normal days             56     0.67%    1.02%       0.41           21%
+macro-release days      26     0.86%    1.16%       0.59           42%
+normal days             57     0.67%    1.01%       0.42           23%
 
 [2] PER-REPORT REACTION  (SPY, ranked by avg |ret_cc|)
 report                              n  |ret_cc|  |ret_oc|   range  trend  dir%
@@ -17,16 +17,16 @@ JOLTS (Job Openings)                5     1.04%     0.84%   1.15%   0.70   60%
 FOMC Rate Decision                  3     0.89%     0.83%   1.18%   0.59   67%
 ISM Services PMI                    1     0.87%     0.34%   0.67%   0.51    0%
 Retail Sales (Advance)              4     0.86%     0.77%   1.15%   0.63   50%
+CPI (Consumer Price Index)          3     0.60%     0.51%   1.08%   0.44   33%
 GDP                                 5     0.57%     0.71%   1.24%   0.59    0%
 PCE (Personal Income & Outlays)     5     0.57%     0.71%   1.24%   0.59    0%
-CPI (Consumer Price Index)          4     0.48%     0.43%   1.06%   0.38   25%
+FOMC June Minutes                   1     0.31%     0.30%   0.89%   0.34    0%
 
   -> Big |ret_cc| + high trend + high dir%% = clean tradable move.
      Big range but LOW trend = chop (wide, whippy, round-trips).
 
 [3] DAY-BY-DAY  (SPY, macro-release days in window)
 date             gap   ret_cc   ret_oc   range cl_loc  trend  class       reports
-2026-03-11    +0.06%   -0.13%   -0.18%  1.00%   0.44   0.19  MIXED       CPI (Consumer Price Index)
 2026-03-13    +0.48%   -0.57%   -1.04%  1.65%   0.08   0.63  MIXED       GDP, JOLTS (Job Openings), PCE (Personal Income & Outlays)
 2026-03-18    -0.36%   -1.40%   -1.04%  1.27%   0.03   0.82  DIRECTIONAL FOMC Rate Decision, PPI (Producer Price Index)
 2026-03-31    +1.10%   +2.91%   +1.78%  2.15%   0.91   0.83  DIRECTIONAL JOLTS (Job Openings)
@@ -52,4 +52,5 @@ date             gap   ret_cc   ret_oc   range cl_loc  trend  class       report
 2026-06-30    +0.04%   +0.78%   +0.74%  0.96%   0.82   0.77  DIRECTIONAL JOLTS (Job Openings)
 2026-07-02    +0.22%   -0.13%   -0.35%  1.51%   0.42   0.23  CHOP        Jobs Report (NFP + Unemployment)
 2026-07-06    +0.53%   +0.87%   +0.34%  0.67%   0.77   0.51  MIXED       ISM Services PMI
+2026-07-08    -0.61%   -0.31%   +0.30%  0.89%   0.89   0.34  MIXED       FOMC June Minutes
 ```
