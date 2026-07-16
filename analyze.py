@@ -147,13 +147,13 @@ def main():
                 f"{(d['klass']=='DIRECTIONAL').mean()*100:13.0f}%")
 
     # ---- 2. per-report ranking ------------------------------------------
-    out("\n[2] PER-REPORT REACTION  (SPY, ranked by avg |ret_cc|)")
+    out(f"\n[2] PER-REPORT REACTION  ({args.symbol}, ranked by avg |ret_cc|)")
     out(f"{'report':34s}{'n':>3s}{'|ret_cc|':>10s}{'|ret_oc|':>10s}"
         f"{'range':>8s}{'trend':>7s}{'dir%':>6s}")
-    spy = prices["SPY"].set_index("Date")
+    sym_px = prices[args.symbol].set_index("Date")
     recs = []
     for report, grp in macro.groupby("report"):
-        d = spy.reindex(grp["Date"].unique()).dropna(subset=["ret_cc"])
+        d = sym_px.reindex(grp["Date"].unique()).dropna(subset=["ret_cc"])
         if not len(d):
             continue
         kl = d.apply(classify, axis=1)
