@@ -36,6 +36,7 @@ SUBCMDS = {"prices": "fetch_prices.py",
            "options": "fetch_options.py",
            "darkpool": "darkpool.py",
            "backtest": "backtest.py",
+           "detect": "detector.py",
            "sync": "sync_public.py",
            "q": "queries.py",
            "btc": "btc_trend.py"}
