@@ -105,6 +105,42 @@ def polymarket():
     return out
 
 
+def cot_wti():
+    """CFTC managed-money net position in ICE WTI (Socrata, updates Fridays,
+    positions as of Tuesday). Spec flows = the 'oil futures smart money'."""
+    try:
+        js = requests.get("https://publicreporting.cftc.gov/resource/72hh-3qpy.json",
+                          params={"$limit": 4, "$order": "report_date_as_yyyy_mm_dd DESC",
+                                  "$where": "upper(market_and_exchange_names) like "
+                                            "'%CRUDE OIL%LIGHT%ICE%'"},
+                          timeout=25).json()
+        rows = [(r["report_date_as_yyyy_mm_dd"][:10],
+                 int(float(r["m_money_positions_long_all"])) -
+                 int(float(r["m_money_positions_short_all"]))) for r in js]
+        if not rows:
+            print("\n[6] COT: no rows"); return None
+        path = "  ".join(f"{d[5:]}:{n:+,}" for d, n in reversed(rows))
+        print(f"\n[6] CFTC managed-money WTI net (ICE): {path}")
+        print("    (net rising toward flat/long = specs chasing oil up, deal-crash fuel builds)")
+        return rows[0][1]
+    except (requests.RequestException, ValueError, KeyError) as e:
+        print(f"\n[6] COT unavailable: {str(e)[:50]}"); return None
+
+
+def brent_wti():
+    """BNO/USO close ratio: rising = Brent premium = Hormuz/global stress."""
+    try:
+        u = pd.read_csv(config.PRICE_DIR / "daily_USO.csv", index_col="Date")["Close"]
+        b = pd.read_csv(config.PRICE_DIR / "daily_BNO.csv", index_col="Date")["Close"]
+        r = (b / u).dropna()
+        print(f"\n[7] Brent/WTI proxy (BNO/USO): {r.iloc[-1]:.3f}"
+              f"  (5d ago {r.iloc[-6]:.3f}, 25d ago {r.iloc[-25]:.3f};"
+              " rising = stress premium widening)")
+        return float(r.iloc[-1])
+    except (FileNotFoundError, IndexError):
+        print("\n[7] Brent/WTI: refresh USO+BNO dailies first"); return None
+
+
 def breakeven():
     try:
         r = requests.get("https://api.stlouisfed.org/fred/series/observations",
@@ -129,12 +165,14 @@ def main():
     skew = uso_skew(df, spot)
     b = basket()
     pm = polymarket()
+    cot_net = cot_wti()
+    bw = brent_wti()
     breakeven()
 
     config.ANALYSIS_DIR.mkdir(exist_ok=True)
     row = {"date": dt.date.today().isoformat(), "uso_spot": spot,
            "watch_put_vol": tot_v, "watch_put_oi": tot_oi,
-           "skew_25d": skew,
+           "skew_25d": skew, "cot_wti_net": cot_net, "brent_wti": bw,
            **{f"ret1d_{s}": v for s, v in b.items()},
            **{f"pm_{k[:40]}": v for k, v in pm.items()}}
     log = pd.DataFrame([row])
