@@ -29,3 +29,29 @@ release_date,report,time_et,tier,consensus,actual,prev,notes
 2026-07-17,Housing Starts,08:30,3,,,1.18,millions
 2026-07-17,Industrial Production,09:15,3,,,0.1,percent MoM
 # --- add next week's rows here ---
+# --- week of 2026-08-03 (backfilled 2026-08-11 from MarketWatch) ---
+2026-08-03,ISM Manufacturing,10:00,2,54.0,55.6,53.3,beat
+2026-08-04,US Trade Balance,08:30,3,-72.9,-73.3,-77.6,billions USD
+2026-08-04,Factory Orders,10:00,3,0.3,-0.3,-1.1,percent MoM; miss
+2026-08-05,ADP Employment,08:15,2,75,44,95,thousands; big miss
+2026-08-05,ISM Services PMI,10:00,2,54.5,54.1,54.0,slight miss
+2026-08-06,US Productivity Q2,08:30,3,0.6,1.4,0.8,percent; beat
+2026-08-07,NFP m/m,08:30,1,83,-23,20,thousands; -106k miss; unemp 4.1 vs 4.2 cons
+2026-08-07,Hourly Wages m/m,08:30,2,0.3,0.1,0.3,percent; soft = disinflationary
+# --- week of 2026-08-10 (filled 2026-08-11) ---
+2026-08-11,NFIB Optimism,06:00,3,97.0,99.8,97.4,big beat
+2026-08-11,Existing Home Sales,10:00,3,4.05,4.06,4.13,millions
+2026-08-12,CPI m/m,08:30,1,0.1,,-0.4,percent MoM headline
+2026-08-12,CPI y/y,08:30,1,3.4,,3.5,percent YoY
+2026-08-12,Core CPI m/m,08:30,1,0.2,,0.0,percent MoM
+2026-08-12,Core CPI y/y,08:30,1,2.5,,2.6,percent YoY
+2026-08-12,Federal Budget,14:00,3,-360,,-291,billions USD
+2026-08-13,PPI m/m,08:30,2,0.2,,-0.3,percent MoM headline
+2026-08-13,Core PPI m/m,08:30,2,0.3,,0.1,percent MoM
+2026-08-13,Jobless Claims consensus,08:30,3,204,,199,thousands
+2026-08-13,Fed speakers,08:15,3,,,,Hammack 8:15am + Barkin 8:40am; tone events pre-PPI
+2026-08-14,Retail Sales m/m,08:30,2,0.1,,0.2,percent MoM headline
+2026-08-14,Retail Sales ex-autos,08:30,2,0.2,,-0.2,percent MoM
+2026-08-14,Business Inventories,10:00,3,0.2,,0.3,percent MoM (June data)
+2026-08-14,Consumer Sentiment prelim,10:00,2,54.5,,54.2,UMich
+# --- add next week's rows here ---
