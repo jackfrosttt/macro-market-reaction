@@ -141,7 +141,7 @@ def brent_wti():
         print("\n[7] Brent/WTI: refresh USO+BNO dailies first"); return None
 
 
-REGSHO_WATCH = ["SPY", "QQQ", "NVDA", "MU", "USO"]
+REGSHO_WATCH = ["SPY", "QQQ", "NVDA", "MU", "USO", "SNDK", "SMH", "SOXL"]
 
 
 def regsho_daily():
