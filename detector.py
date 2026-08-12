@@ -141,6 +141,49 @@ def brent_wti():
         print("\n[7] Brent/WTI: refresh USO+BNO dailies first"); return None
 
 
+REGSHO_WATCH = ["SPY", "QQQ", "NVDA", "MU", "USO"]
+
+
+def regsho_daily():
+    """FINRA daily off-exchange ('dark pool') volume, T+1. Baseline short% for
+    ETFs runs 50-65% (internalizers print shorts vs retail buys) — the signal
+    is DEVIATION: off-exchange share of tape spiking, or short% collapsing
+    (long blocks crossing in the dark)."""
+    url = "https://api.finra.org/data/group/otcmarket/name/regshodaily"
+    try:
+        parts = requests.get("https://api.finra.org/partitions/group/otcmarket/name/regshodaily",
+                             timeout=20, headers={"Accept": "application/json"}).json()
+        latest = parts["availablePartitions"][0]["partitions"][0]
+    except (requests.RequestException, ValueError, KeyError, IndexError):
+        print("\n[8] regSHO daily: partitions unavailable"); return {}
+    print(f"\n[8] Off-exchange daily volume (FINRA regSHO, {latest}):")
+    out = {}
+    for sym in REGSHO_WATCH:
+        body = {"limit": 10, "compareFilters": [
+            {"compareType": "EQUAL", "fieldName":
+             "securitiesInformationProcessorSymbolIdentifier", "fieldValue": sym},
+            {"compareType": "EQUAL", "fieldName": "tradeReportDate", "fieldValue": latest}]}
+        try:
+            js = requests.post(url, json=body, timeout=25,
+                               headers={"Accept": "application/json"}).json()
+        except (requests.RequestException, ValueError):
+            continue
+        if not isinstance(js, list) or not js:
+            continue
+        tot = int(sum(r.get("totalParQuantity") or 0 for r in js))
+        sh = int(sum(r.get("shortParQuantity") or 0 for r in js))
+        share = ""
+        try:
+            d = pd.read_csv(config.PRICE_DIR / f"daily_{sym}.csv", index_col="Date")
+            cv = float(d["Volume"].loc[latest])
+            share = f"  ({tot/cv*100:.0f}% of tape)"
+        except (FileNotFoundError, KeyError, ValueError):
+            pass
+        print(f"    {sym:5s} off-exch {tot:12,d}  short% {sh/max(tot,1)*100:5.1f}%{share}")
+        out[f"regsho_{sym}"] = round(sh/max(tot,1), 3)
+    return out
+
+
 def breakeven():
     try:
         r = requests.get("https://api.stlouisfed.org/fred/series/observations",
@@ -167,12 +210,13 @@ def main():
     pm = polymarket()
     cot_net = cot_wti()
     bw = brent_wti()
+    rs = regsho_daily()
     breakeven()
 
     config.ANALYSIS_DIR.mkdir(exist_ok=True)
     row = {"date": dt.date.today().isoformat(), "uso_spot": spot,
            "watch_put_vol": tot_v, "watch_put_oi": tot_oi,
-           "skew_25d": skew, "cot_wti_net": cot_net, "brent_wti": bw,
+           "skew_25d": skew, "cot_wti_net": cot_net, "brent_wti": bw, **rs,
            **{f"ret1d_{s}": v for s, v in b.items()},
            **{f"pm_{k[:40]}": v for k, v in pm.items()}}
     log = pd.DataFrame([row])
