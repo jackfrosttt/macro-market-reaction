@@ -184,6 +184,37 @@ def regsho_daily():
     return out
 
 
+
+FORM4_WATCH = ["MU", "SNDK", "NVDA", "CSCO", "SPCX", "XOM", "CVX"]
+
+
+def insider_form4s(days=10):
+    """[9] EDGAR Form 4 (insider trade) filings in the last N days for watch
+    names. Clustered filings around event windows = insiders active; open the
+    filings on sec.gov to see buy vs sell. 2-business-day filing lag."""
+    import re as _re
+    H = {"User-Agent": "market-data-research contact@example.com"}
+    cutoff = (dt.date.today() - dt.timedelta(days=days)).isoformat()
+    print(f"\n[9] Insider Form 4 filings (last {days}d, EDGAR):")
+    out = {}
+    for sym in FORM4_WATCH:
+        try:
+            r = requests.get("https://www.sec.gov/cgi-bin/browse-edgar",
+                             params={"action": "getcompany", "CIK": sym, "type": "4",
+                                     "count": "10", "output": "atom"},
+                             headers=H, timeout=20)
+            dates = [d for d in _re.findall(r"<filing-date>(.*?)</filing-date>", r.text)
+                     if d >= cutoff]
+        except requests.RequestException:
+            continue
+        if dates:
+            print(f"    {sym:5s} {len(dates)} filing(s): {', '.join(sorted(set(dates), reverse=True)[:4])}")
+            out[f"form4_{sym}"] = len(dates)
+    if not out:
+        print("    none in window")
+    return out
+
+
 def breakeven():
     try:
         r = requests.get("https://api.stlouisfed.org/fred/series/observations",
@@ -211,12 +242,13 @@ def main():
     cot_net = cot_wti()
     bw = brent_wti()
     rs = regsho_daily()
+    f4 = insider_form4s()
     breakeven()
 
     config.ANALYSIS_DIR.mkdir(exist_ok=True)
     row = {"date": dt.date.today().isoformat(), "uso_spot": spot,
            "watch_put_vol": tot_v, "watch_put_oi": tot_oi,
-           "skew_25d": skew, "cot_wti_net": cot_net, "brent_wti": bw, **rs,
+           "skew_25d": skew, "cot_wti_net": cot_net, "brent_wti": bw, **rs, **f4,
            **{f"ret1d_{s}": v for s, v in b.items()},
            **{f"pm_{k[:40]}": v for k, v in pm.items()}}
     log = pd.DataFrame([row])
