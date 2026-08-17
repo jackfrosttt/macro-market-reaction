@@ -1,9 +1,7 @@
 release_date,report,tier,release_id,time_et,series,units,period,value,prev_value,chg_vs_prev
-2026-02-05,JOLTS (Job Openings),2,192,10:00,JTSJOL,openings level (k),2025-12-01,6542.0,,
-2026-02-05,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-01-31,231000.0,,
 2026-02-10,Retail Sales (Advance),2,9,08:30,RSAFS,$M sales,2025-12-01,734967.0,,
 2026-02-11,Jobs Report (NFP + Unemployment),1,50,08:30,PAYEMS,payrolls level (k),2026-01-01,158627.0,,
-2026-02-12,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-02-07,227000.0,231000.0,-4000.0
+2026-02-12,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-02-07,227000.0,,
 2026-02-13,CPI (Consumer Price Index),1,10,08:30,CPIAUCSL,index (headline),2026-01-01,326.588,,
 2026-02-19,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-02-14,206000.0,227000.0,-21000.0
 2026-02-20,PCE (Personal Income & Outlays),1,54,08:30,PCEPILFE,core PCE index,2025-12-01,127.918,,
@@ -17,7 +15,7 @@ release_date,report,tier,release_id,time_et,series,units,period,value,prev_value
 2026-03-12,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-03-07,213000.0,213000.0,0.0
 2026-03-13,PCE (Personal Income & Outlays),1,54,08:30,PCEPILFE,core PCE index,2026-01-01,128.394,127.918,0.4759999999999991
 2026-03-13,GDP,2,53,08:30,A191RL1Q225SBEA,real GDP QoQ % ann.,2025-10-01,0.7,1.4,-0.7
-2026-03-13,JOLTS (Job Openings),2,192,10:00,JTSJOL,openings level (k),2026-01-01,6946.0,6542.0,404.0
+2026-03-13,JOLTS (Job Openings),2,192,10:00,JTSJOL,openings level (k),2026-01-01,6946.0,,
 2026-03-18,FOMC Rate Decision,1,101,14:00,DFEDTARU,fed funds upper %,2026-03-18,3.75,,
 2026-03-18,PPI (Producer Price Index),2,46,08:30,PPIFIS,final demand index,2026-02-01,153.231,152.174,1.056999999999988
 2026-03-19,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-03-14,205000.0,213000.0,-8000.0
@@ -77,3 +75,7 @@ release_date,report,tier,release_id,time_et,series,units,period,value,prev_value
 2026-08-04,JOLTS (Job Openings),2,192,10:00,JTSJOL,openings level (k),2026-06-01,7359.0,7594.0,-235.0
 2026-08-06,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-08-01,199000.0,197000.0,2000.0
 2026-08-07,Jobs Report (NFP + Unemployment),1,50,08:30,PAYEMS,payrolls level (k),2026-07-01,158858.0,158984.0,-126.0
+2026-08-12,CPI (Consumer Price Index),1,10,08:30,CPIAUCSL,index (headline),2026-07-01,332.813,332.568,0.24500000000000455
+2026-08-13,PPI (Producer Price Index),2,46,08:30,PPIFIS,final demand index,2026-07-01,156.563,156.566,-0.0030000000000143245
+2026-08-13,Initial Jobless Claims,3,180,08:30,ICSA,claims,2026-08-08,209000.0,199000.0,10000.0
+2026-08-14,Retail Sales (Advance),2,9,08:30,RSAFS,$M sales,2026-07-01,763602.0,768553.0,-4951.0
